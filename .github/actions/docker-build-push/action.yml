@@ -2,9 +2,6 @@ name: Docker Build and Push
 inputs:
   context:
     description: context of Dockerfile
-  file:
-    description: filepath of Dockerfile
-    default: ./Dockerfile
   push:
     description: whether docker image should be pushed
     default: false
@@ -34,4 +31,4 @@ runs:
       tags: ghcr.io/${{ github.repository }}:${{ steps.version.outputs.version }}
       cache-from: type=gha
       cache-to: type=gha,mode=max
-      file: ${{ inputs.file }}
+      file: ${{ inputs.context }}/Dockerfile
