@@ -4,7 +4,7 @@ inputs:
     description: context of Dockerfile
   file:
     description: filepath of Dockerfile
-    default: Dockerfile
+    default: ./Dockerfile
   push:
     description: whether docker image should be pushed
     default: false
