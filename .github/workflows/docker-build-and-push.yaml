@@ -1,0 +1,42 @@
+name: Docker Build and Push
+
+on:
+  pull_request:
+    paths:
+      - 'images/**'
+  push:
+    branches:
+      - main
+
+jobs:
+  changed-files:
+    runs-on: ubuntu-latest
+
+    outputs:
+      is-netools-changed: ${{ steps.changed-images.outputs.netools_any_changed }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Get changed images
+        id: changed-images
+        uses: tj-actions/changed-files@v45
+        with:
+          files_yaml: |
+            netools:
+            - images/netools/**
+
+  netools:
+    runs-on: ubuntu-latest
+    if: needs.changed-files.outputs.is-netools-changed == 'true'
+    needs: changed-files
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build docker image
+        uses: ./.github/actions/docker-build-push
+        with:
+          context: ./images/netools
+          push: ${{ github.ref == 'refs/heads/main' }}
+          gh-token: ${{ secrets.GITHUB_TOKEN }}
+
