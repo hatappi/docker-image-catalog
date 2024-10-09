@@ -15,7 +15,7 @@ runs:
   using: "composite"
   steps:
   - id: version
-    run: echo "version=$(cat VERSION)" >> "$GITHUB_OUTPUT"
+    run: echo "version=$(cat ${{ inputs.context }}/VERSION)" >> "$GITHUB_OUTPUT"
     shell: bash
 
   - uses: docker/setup-buildx-action@v3
