@@ -4,6 +4,7 @@ ARG TARGETARCH
 
 ENV VEGETA_VERSION=12.12.0
 ENV GHZ_VERSION=0.120.0
+ENV GRPCURL_VERSION=1.9.1
 
 # This step is required to skip selecting Geographic area
 RUN ln -sf /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
@@ -49,5 +50,15 @@ RUN PLATFORM=$( \
     mv ghz /usr/local/bin && \
     rm -rf ghz-linux-${PLATFORM}.tar.gz
 
-
+# gRPCurl
+RUN PLATFORM=$( \
+      case ${TARGETARCH} in \
+        amd64 ) echo "x86_64";; \
+        arm64 ) echo "arm64";; \
+      esac \
+    ) && \
+    wget https://github.com/fullstorydev/grpcurl/releases/download/v${GRPCURL_VERSION}/grpcurl_${GRPCURL_VERSION}_linux_${PLATFORM}.tar.gz
+    tar -zxvf grpcurl_${GRPCURL_VERSION}_linux_${PLATFORM}.tar.gz && \
+    mv grpcurl /usr/local/bin && \
+    rm -rf grpcurl_${GRPCURL_VERSION}_linux_${PLATFORM}.tar.gz
 
