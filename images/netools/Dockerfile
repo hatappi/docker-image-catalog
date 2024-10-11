@@ -57,7 +57,7 @@ RUN PLATFORM=$( \
         arm64 ) echo "arm64";; \
       esac \
     ) && \
-    wget https://github.com/fullstorydev/grpcurl/releases/download/v${GRPCURL_VERSION}/grpcurl_${GRPCURL_VERSION}_linux_${PLATFORM}.tar.gz
+    wget https://github.com/fullstorydev/grpcurl/releases/download/v${GRPCURL_VERSION}/grpcurl_${GRPCURL_VERSION}_linux_${PLATFORM}.tar.gz && \
     tar -zxvf grpcurl_${GRPCURL_VERSION}_linux_${PLATFORM}.tar.gz && \
     mv grpcurl /usr/local/bin && \
     rm -rf grpcurl_${GRPCURL_VERSION}_linux_${PLATFORM}.tar.gz
